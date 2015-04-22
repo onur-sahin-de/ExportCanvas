@@ -1,0 +1,39 @@
+// Die ID des Canvas-Tags welches Sie exportieren möchten
+var exampleCanvasID = "myCanvas";
+
+// ExportCanvas-Objekt erzeugen um Zugriff auf die export-Methode zu ermöglichen
+var exportCanvas = new ExportCanvas();
+
+// Die Config&Sprachdatei laden (Zwingend erforderlich + Reihenfolge beachten. Erst die Config laden und danach die Sprachdatei)
+exportCanvas.loadConfigFile("core/config/config.js");
+exportCanvas.loadLanguageFile("core/language/de.js");
+
+// Gewünschten MimeType setzen
+exportCanvas.setMimeType("image/jpeg");
+
+// Gewünschte Qualitätsstufe beim Export einstellen (Nur 0.1 bis 1.0 gültig)
+exportCanvas.setExportQuality(1.0);
+
+// Die export-Methode benötigt die ID des Canvas-Tags welches Sie exportieren möchten			
+exportCanvas.export(exampleCanvasID, function() {
+							
+	// Hier kommt der manuelle Code nachdem der Download erfolgreich gestartet hat
+							
+}, function(getLastReport) {
+							
+	// Hier kommt der manuelle Code nachdem der Download gescheitert ist
+	// Die Parameterübergabe "getLastReport" der ErrorCallback-Funktion liefert den Grund dazu
+							
+});
+
+// Die export-Methode funktioniert auch ohne die jeweiligen Callback-Methoden aber diese wird nicht empfohlen sondern dienen einem schnellen Test
+exportCanvas.export(exampleCanvasID);
+
+// WICHTIG! Der Export kann nur funktionieren wenn das Dokument geladen worden ist! Da das Canvas-Objekt im DOM geladen werden sein muss um es zu exportieren
+// Ein Beispiel dafür wäre zb:
+window.onload = function() {
+
+	// Hier kommt der Verarbeitungs-Code
+	exportCanvas.export(exampleCanvasID); // oder gegebenfalls per CallBack-Variante (was empfohlen wird)
+
+};

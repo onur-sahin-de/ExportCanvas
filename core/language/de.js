@@ -1,0 +1,9 @@
+﻿SCRIPT_NAME = "ExportCanvas";
+FIRST_PARAM_NO_FUNC = "Erster Parameter ist keine Funktion";
+SECOND_PARAM_NO_FUNC = "Zweiter Parameter ist keine Funktion";
+NO_MIMETYPE_SUPPORT_FOR = "Dein Browser unterstützt folgenden MimeType nicht";
+THESE_MIMETYPES_ARE_ALLOWED = "Diese MimeTypes sind erlaubt";
+DOWNLOAD_HAS_STARTED = "Der Download wurde gestartet!";
+EXPORT_FILENAME = "mein-mosaik";
+CANVAS_NOT_EXPORTABLE = "Dieses Canvas-Bild lässt sich nicht exportieren! Bitte überprüfen Sie die Größe des ausgewählten Hauptbildes! Maximale Bildgröße: " + MAX_CANVAS_WIDTH_FOR_EXPORT + " x " + MAX_CANVAS_HEIGHT_FOR_EXPORT;
+CANVAS_EXPORT_QUALITY_NOT_VALID = "Die Qualitätseinstellung des Exports ist nicht korrekt! Werte von " + MIN_EXPORT_QUALITY + " - " + MAX_EXPORT_QUALITY + " sind erlaubt!";

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>ExportCanvas 1.6.5 - Onur Sahin</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/layout.css" />
+		<script src="core/export-canvas.js"></script>
+        <script>
+			$("document").ready(function() {
+				
+				var exampleCanvasID = "myCanvas";
+				var ctx = document.getElementById(exampleCanvasID).getContext("2d");
+				ctx.fillStyle = "rgb(200,0,0)";
+				ctx.fillRect (10, 10, 55, 50);
+				ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+				ctx.fillRect (30, 30, 55, 50);
+				
+				var exportCanvas = new ExportCanvas();
+				exportCanvas.loadConfigFile("core/config/config.js");
+				exportCanvas.loadLanguageFile("core/language/de.js");
+				exportCanvas.setExportQuality(1.0);
+
+				$("ul#selectDownloadType li a").click(function() {
+					
+					$("html, body").animate({scrollTop:$(document).height()}, 800);
+					
+					var getIDofSelectedDownloadType = $(this).attr("id");
+					if(getIDofSelectedDownloadType == "downloadAsPNG") {
+						
+						exportCanvas.setMimeType("image/png");
+						
+					} else if(getIDofSelectedDownloadType == "downloadAsJPEG") {
+						
+						exportCanvas.setMimeType("image/jpeg");
+						
+					} else if(getIDofSelectedDownloadType == "downloadAsBMP") {
+						
+						exportCanvas.setMimeType("image/bmp");
+						
+					} else if(getIDofSelectedDownloadType == "downloadAsGIF") {
+						
+						exportCanvas.setMimeType("image/gif");
+						
+					} else if(getIDofSelectedDownloadType == "downloadAsWEBP") {
+						
+						exportCanvas.setMimeType("image/webp");
+						
+					} else {
+						
+						$("section#message").html('<div class="alert alert-danger" role="alert">Diese Export-Möglichkeit gibt es nicht!</div>').show(1000);	
+						
+					}
+					
+					exportCanvas.export(exampleCanvasID, function() {
+						
+							$("section#message").html("").css("display", "none");
+							$("section#message").html('<div class="alert alert-success" role="alert">' + DOWNLOAD_HAS_STARTED + '</div>').show(1000);
+						
+						}, function(getLastReport) {
+						
+							$("section#message").html("").css("display", "none");
+							$("section#message").html('<div class="alert alert-danger" role="alert">' + getLastReport + '</div>').show(1000);
+						
+					});
+					
+				});
+				
+				$("a#showTutorial").click(function() {
+				   $("html, body").animate({scrollTop:$(document).height()}, 800);
+				   $.ajax({
+						url : "example/example.txt",
+						dataType: "text",
+						success : function (data) {
+							$("section#tutorial").css("display", "none");
+							$("section#tutorial").html('<h2>HTML-Einbindung (HEAD)</h2><code>&#x3C;script src=&#x22;PFAD_ZUR_BIBLIOTHEK/core/export-canvas.js&#x22;&#x3E;&#x3C;/script&#x3E;</code><br /><h2>HTML-Einbindung (BODY)</h2><code>&#x3C;canvas id=&#x22;myCanvas&#x22;&#x3E;Ihr Browser unterstützt das Canvas-Objekt nicht!&#x3C;/canvas&#x3E;</code><br /><h2>Javascript-Einbindung</h2><br /><code>' + data + '</code>');
+							$("section#tutorial").slideDown(1000);
+						},
+						error : function() {
+							alert("Konnte die Ajax-Anfrage lokal nicht durchführen! Am Besten mit Firefox öffnen um die Anleitung zu sehen! Das Bibliothek sollte in allen Browsern funktioneren!");
+						}
+					});
+				});
+				
+			});
+        </script>
+    </head>
+    <body>
+		<section id="mainSection" class="container">
+			<section class="jumbotron">
+				<h1>
+					<a href="index.html" id="refresh">ExportCanvas 1.6.5 - by Onur Şahin</a>
+				</h1>
+				<p>Mit dieser kleinen Bibliothek ist es möglich Canvas-Objekte zum Download anzubieten im Sinne eines Download-Dialogs welcher vom Browser gestartet wird.</p>
+				<p>
+					<a class="btn btn-primary btn-lg" role="button" id="showTutorial">Wie benutze ich die Bibliothek?</a>
+				</p>
+				<section id="tutorial">
+					<code id="exampleCode"></code>
+				</section>
+			</section>
+			<section id="example">
+				<section class="pull-left" id="canvasSection">
+					<h2>Beispiel-Canvas-Grafik</h2>
+					<canvas id="myCanvas">Ihr Browser unterstützt das Canvas-Objekt nicht!</canvas>
+				</section>
+				<aside class="btn-group pull-right" id="downloadSection">
+					<button class="btn btn-primary" type="button" style="cursor: auto">Export-Typ auswählen</button>
+					<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul role="menu" class="dropdown-menu" id="selectDownloadType">
+						<li><a href="#downloadAsPNG" id="downloadAsPNG">PNG-Download</a></li>
+						<li><a href="#downloadAsJPEG" id="downloadAsJPEG">JPEG-Download</a></li>
+						<li><a href="#downloadAsBMP" id="downloadAsBMP">BMP-Download</a></li>
+						<li><a href="#downloadAsBMP" id="downloadAsGIF">GIF-Download</a></li>
+						<li><a href="#downloadAsBMP" id="downloadAsWEBP">WEBP-Download</a></li>
+					</ul>
+				</aside>
+				<section style="clear:both" id="message"></section>
+			</section>
+		</section>
+    </body>
+</html>

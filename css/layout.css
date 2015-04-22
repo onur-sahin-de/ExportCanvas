@@ -1,0 +1,13 @@
+section#mainSection {
+	margin-top: 20px;
+}
+section#tutorial, section#message {
+	display: none;
+}
+code {
+	white-space: pre-wrap;
+}
+a#refresh {
+	color: #333333;
+	text-decoration: none;
+}
