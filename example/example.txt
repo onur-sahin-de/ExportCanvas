@@ -1,4 +1,4 @@
-// Die ID des Canvas-Tags welches Sie exportieren möchten
+﻿// Die IdD des Canvas-Tags welches Sie exportieren möchten
 var exampleCanvasID = "myCanvas";
 
 // ExportCanvas-Objekt erzeugen um Zugriff auf die export-Methode zu ermöglichen
